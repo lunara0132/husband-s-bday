@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday, Ameen ⚽</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B1F3A;
+    --navy-deep:#071426;
+    --sky:#6CACE4;
+    --sky-light:#A9D4F5;
+    --white:#F7FAFF;
+    --gold:#E3BD5C;
+    --blush:#FF8FA3;
+    --line: rgba(247,250,255,0.14);
+  }
+  :root:not([data-theme="light"]){
+    --bg: var(--navy-deep);
+    --panel: var(--navy);
+    --text: var(--white);
+    --muted: #B9CBE6;
+  }
+  :root[data-theme="light"]{
+    --bg: var(--navy-deep);
+    --panel: var(--navy);
+    --text: var(--white);
+    --muted: #B9CBE6;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg: var(--navy-deep);
+      --panel: var(--navy);
+      --text: var(--white);
+      --muted: #B9CBE6;
+    }
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background: radial-gradient(ellipse at 50% -10%, #12305c 0%, var(--bg) 55%);
+    color: var(--text);
+    font-family:'Poppins', system-ui, -apple-system, sans-serif;
+    font-weight:300;
+    overflow-x:hidden;
+    min-height:100vh;
+    position:relative;
+  }
+  /* subtle pitch lines texture */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image: repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 2px, transparent 2px 140px);
+    pointer-events:none;
+    z-index:0;
+  }
+  .wrap{ max-width:760px; margin:0 auto; padding: 0 24px; position:relative; z-index:1;}
+  section{ padding: 96px 0; }
+  h1,h2,h3{ font-family:'Bebas Neue', 'Poppins', sans-serif; font-weight:400; letter-spacing:0.03em; }
+
+  /* ---------- floodlights ---------- */
+  .floodlights{ position:fixed; inset:0; pointer-events:none; z-index:0; opacity:0; transition: opacity 2.2s ease;}
+  .floodlights.on{ opacity:1; }
+  .beam{ position:absolute; top:-10%; width:60vw; height:140vh; background:radial-gradient(ellipse at top, rgba(169,212,245,0.16), transparent 60%); }
+  .beam.l{ left:-15vw; transform:rotate(12deg); }
+  .beam.r{ right:-15vw; transform:rotate(-12deg); }
+
+  /* ---------- hero ---------- */
+  .hero{ min-height:100svh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding-top:64px;}
+  .kickoff-tag{
+    font-family:'Poppins'; font-size:13px; letter-spacing:0.28em; color: var(--sky-light);
+    border:1px solid var(--line); padding:6px 16px; border-radius:100px; margin-bottom:28px;
+    opacity:0; transform:translateY(8px); animation: rise 0.8s 0.2s forwards ease-out;
+  }
+  .hero .num10{
+    font-family:'Bebas Neue'; font-size:clamp(90px,22vw,190px); line-height:0.85; color:var(--gold);
+    text-shadow: 0 0 60px rgba(227,189,92,0.35);
+    opacity:0; transform:translateY(18px) scale(0.96); animation: rise 1s 0.5s forwards ease-out;
+  }
+  .hero h1{ font-size:clamp(44px,10vw,84px); line-height:0.95; color:var(--white); margin-top:6px;
+    opacity:0; transform:translateY(18px); animation: rise 1s 0.85s forwards ease-out;}
+  .hero h1 em{ font-style:normal; color:var(--sky); }
+  .hero .sub{
+    max-width:480px; margin:22px auto 0; color:var(--muted); font-size:17px; line-height:1.6;
+    opacity:0; transform:translateY(14px); animation: rise 1s 1.2s forwards ease-out;
+  }
+  .hero .sub b{ color: var(--white); font-weight:500;}
+  @keyframes rise{ to{ opacity:1; transform:none; } }
+
+  .music-btn{
+    margin-top:40px; display:inline-flex; align-items:center; gap:10px;
+    background: var(--sky); color: var(--navy-deep); border:none; padding:14px 26px;
+    border-radius:100px; font-family:'Poppins'; font-weight:600; font-size:15px; cursor:pointer;
+    box-shadow: 0 8px 30px rgba(108,172,228,0.35);
+    opacity:0; animation: rise 1s 1.5s forwards ease-out;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .music-btn:hover{ transform:translateY(-2px); box-shadow:0 10px 34px rgba(108,172,228,0.5); }
+  .music-btn:active{ transform:translateY(0); }
+  .music-btn .dot{ width:8px; height:8px; border-radius:50%; background:var(--navy-deep); }
+
+  .scroll-cue{ position:absolute; bottom:34px; font-size:13px; color:var(--muted); letter-spacing:0.15em;
+    opacity:0; animation: rise 1s 2s forwards ease-out, bob 2.4s 3s infinite ease-in-out; }
+  @keyframes bob{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(6px);} }
+
+  /* ---------- section label ---------- */
+  .eyebrow{ color:var(--sky-light); font-size:13px; letter-spacing:0.2em; margin-bottom:10px; }
+  .section-title{ font-size:clamp(30px,6vw,44px); margin-bottom:36px; }
+  .section-title span{ color:var(--gold); }
+
+  /* ---------- scoreboard (counters) ---------- */
+  .board{
+    background: linear-gradient(180deg, #0d2545, #081a33);
+    border:1px solid var(--line); border-radius:18px; padding:36px 28px;
+    display:grid; grid-template-columns:1fr 1fr; gap:28px; text-align:center;
+  }
+  @media (max-width:520px){ .board{ grid-template-columns:1fr; } }
+  .board .stat-label{ font-size:12px; letter-spacing:0.18em; color:var(--muted); margin-bottom:10px;}
+  .board .stat-num{ font-family:'Bebas Neue'; font-size:clamp(38px,9vw,58px); color:var(--white); line-height:1; }
+  .board .stat-num small{ font-family:'Poppins'; font-size:14px; color:var(--sky-light); display:block; font-weight:500; margin-top:6px; letter-spacing:0.05em;}
+  .board .divider{ grid-column:1/-1; height:1px; background:var(--line); margin:4px 0; }
+  .clock-row{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+  .clock-cell{ background:rgba(255,255,255,0.05); border-radius:10px; padding:10px 14px; min-width:64px;}
+  .clock-cell .n{ font-family:'Bebas Neue'; font-size:30px; color:var(--gold);}
+  .clock-cell .l{ font-size:10px; letter-spacing:0.15em; color:var(--muted); margin-top:2px;}
+  .today-banner{ display:none; font-family:'Bebas Neue'; font-size:clamp(28px,7vw,46px); color:var(--gold); letter-spacing:0.04em;}
+
+  /* ---------- lineup ---------- */
+  .lineup{ display:flex; flex-direction:column; gap:14px; }
+  .player{
+    display:flex; align-items:center; gap:18px; background:rgba(255,255,255,0.04);
+    border:1px solid var(--line); border-radius:14px; padding:16px 18px;
+    transition: background 0.25s ease, transform 0.25s ease;
+  }
+  .player:hover{ background:rgba(255,255,255,0.07); transform:translateX(4px); }
+  .player .jersey{
+    flex:0 0 auto; width:48px; height:48px; border-radius:10px; background:var(--sky);
+    color:var(--navy-deep); font-family:'Bebas Neue'; font-size:20px; display:flex; align-items:center; justify-content:center;
+  }
+  .player.captain .jersey{ background:var(--gold); }
+  .player .role{ font-size:11px; letter-spacing:0.14em; color:var(--sky-light); margin-bottom:3px; }
+  .player .desc{ color:var(--muted); font-size:14.5px; line-height:1.5; }
+  .player .desc b{ color:var(--white); font-weight:500; }
+
+  /* ---------- letter ---------- */
+  .letter-zone{ display:flex; flex-direction:column; align-items:center; }
+  .envelope{
+    width:min(320px, 80vw); aspect-ratio: 3/2; position:relative; cursor:pointer;
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.35));
+  }
+  .envelope .body{ position:absolute; inset:0; background:linear-gradient(160deg, var(--sky-light), var(--sky)); border-radius:8px; }
+  .envelope .flap{ position:absolute; top:0; left:0; right:0; height:56%; background:linear-gradient(160deg, #dbeeff, var(--sky-light));
+    clip-path: polygon(0 0, 100% 0, 50% 78%); border-radius:8px 8px 0 0; transform-origin: top; transition: transform 0.6s cubic-bezier(.6,-0.2,.3,1.3); }
+  .envelope .seal{ position:absolute; top:38%; left:50%; transform:translate(-50%,-50%); width:52px; height:52px; border-radius:50%;
+    background: var(--gold); display:flex; align-items:center; justify-content:center; font-size:22px; box-shadow:0 4px 14px rgba(0,0,0,0.3); z-index:3;}
+  .envelope-hint{ margin-top:18px; color:var(--muted); font-size:13px; letter-spacing:0.05em; }
+  .envelope.open .flap{ transform: rotateX(180deg); }
+  .envelope.open .seal{ opacity:0; transform:translate(-50%,-50%) scale(0.4); transition: all 0.3s ease; }
+
+  .letter-paper{
+    max-width:540px; width:92vw; margin:34px auto 0; background:#FBF6E9; color:#3a2e1f; border-radius:6px;
+    padding:38px 34px; box-shadow:0 24px 60px rgba(0,0,0,0.4);
+    font-family:'Caveat'; font-size:24px; line-height:1.55;
+    max-height:0; opacity:0; overflow:hidden; transition: max-height 0.9s ease, opacity 0.6s ease, padding 0.6s ease;
+  }
+  .letter-paper.show{ max-height:900px; opacity:1; }
+  .letter-paper p{ margin-bottom:16px; }
+  .letter-paper .sign{ text-align:right; font-size:28px; color:#8a5a3a; margin-top:6px; }
+
+  /* ---------- XO game ---------- */
+  .xo-wrap{ display:flex; flex-direction:column; align-items:center; gap:22px;}
+  .xo-legend{ display:flex; gap:28px; font-size:14px; color:var(--muted); }
+  .xo-legend span{ display:inline-flex; align-items:center; gap:8px; }
+  .xo-board{ display:grid; grid-template-columns:repeat(3, 88px); grid-template-rows:repeat(3, 88px); gap:8px; }
+  @media (max-width:400px){ .xo-board{ grid-template-columns:repeat(3, 76px); grid-template-rows:repeat(3, 76px); } }
+  .xo-cell{
+    background:rgba(255,255,255,0.05); border:1px solid var(--line); border-radius:12px;
+    display:flex; align-items:center; justify-content:center; font-size:34px; cursor:pointer;
+    transition: background 0.2s ease;
+  }
+  .xo-cell:hover{ background:rgba(255,255,255,0.1); }
+  .xo-msg{ font-size:16px; color:var(--sky-light); text-align:center; min-height:24px; }
+  .xo-reset{ background:transparent; border:1px solid var(--line); color:var(--muted); padding:9px 18px; border-radius:100px; font-family:'Poppins'; cursor:pointer; font-size:13px;}
+  .xo-reset:hover{ color:var(--white); border-color:var(--sky); }
+
+  /* ---------- story ---------- */
+  .story-card{ background:rgba(255,255,255,0.04); border:1px solid var(--line); border-radius:16px; padding:30px 28px; }
+  .story-card p{ color:var(--muted); font-size:16px; line-height:1.75; margin-bottom:16px; }
+  .story-card p:last-child{ margin-bottom:0; }
+  .story-card b{ color:var(--white); font-weight:500; }
+
+  /* ---------- cake / candle ---------- */
+  .cake-zone{ display:flex; flex-direction:column; align-items:center; gap:26px; }
+  .cake-svg{ width:220px; height:auto; }
+  .flame{ transform-origin:50% 100%; animation: flicker 1.4s infinite ease-in-out; }
+  @keyframes flicker{ 0%,100%{ transform:scaleY(1) rotate(-1deg);} 50%{ transform:scaleY(1.12) rotate(2deg);} }
+  .flame.out{ animation:none; opacity:0; transition: opacity 0.4s ease; }
+  .blow-btn{
+    background:var(--gold); color:var(--navy-deep); border:none; padding:15px 30px; border-radius:100px;
+    font-family:'Poppins'; font-weight:600; font-size:15px; cursor:pointer; user-select:none;
+    box-shadow:0 8px 26px rgba(227,189,92,0.35); position:relative; overflow:hidden;
+  }
+  .blow-btn .fill{ position:absolute; inset:0; left:0; background:rgba(255,255,255,0.4); width:0%; }
+  .blow-btn span{ position:relative; }
+  .wish-text{ text-align:center; color:var(--sky-light); font-family:'Caveat'; font-size:26px; opacity:0; transition:opacity 0.6s ease; max-width:420px;}
+  .wish-text.show{ opacity:1; }
+  canvas#confetti{ position:fixed; inset:0; pointer-events:none; z-index:50; }
+
+  /* ---------- keepy-uppies ---------- */
+  .juggle-zone{ display:flex; flex-direction:column; align-items:center; gap:18px; }
+  .juggle-msg{ text-align:center; color:var(--sky-light); font-size:15px; min-height:22px; max-width:380px; }
+  .ball-stage{ width:100%; max-width:260px; height:220px; position:relative; border-bottom:2px dashed var(--line); }
+  .ball{ position:absolute; bottom:0; left:50%; transform:translateX(-50%); font-size:56px; cursor:pointer; user-select:none;
+    transition: transform 0.28s cubic-bezier(.3,1.6,.5,1); }
+  .ball.hit{ transform:translate(-50%,-90px); }
+  .juggle-score{ font-family:'Bebas Neue'; font-size:28px; color:var(--gold); letter-spacing:0.05em; }
+
+  /* ---------- finale ---------- */
+  .finale{ min-height:70vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; position:relative; overflow:hidden; }
+  .finale-hearts{ position:absolute; inset:0; pointer-events:none; }
+  .finale-hearts span{ position:absolute; bottom:-10%; font-size:22px; opacity:0; animation: floatUp 7s linear infinite; }
+  @keyframes floatUp{
+    0%{ opacity:0; transform:translateY(0) translateX(0) rotate(0deg); }
+    10%{ opacity:0.9; }
+    90%{ opacity:0.7; }
+    100%{ opacity:0; transform:translateY(-90vh) translateX(var(--dx,20px)) rotate(20deg); }
+  }
+  .finale h2{ font-size:clamp(30px,7vw,52px); color:var(--white); position:relative; z-index:1; }
+  .finale h2 span{ color:var(--gold); }
+  .finale p{ max-width:460px; color:var(--muted); font-size:16px; line-height:1.75; margin-top:18px; position:relative; z-index:1; }
+  .finale .final-sign{ font-family:'Caveat'; font-size:36px; color:var(--sky-light); margin-top:26px; position:relative; z-index:1; }
+
+  /* ---------- footer ---------- */
+  footer{ text-align:center; padding:40px 24px 90px; color:var(--muted); }
+  footer .sign-off{ font-family:'Caveat'; font-size:34px; color:var(--sky-light); margin-bottom:8px; }
+  footer .ball{ font-size:22px; margin-top:14px; opacity:0.7; }
+
+  ::selection{ background: var(--sky); color:var(--navy-deep); }
+</style>
+</head>
+<body>
+
+<canvas id="confetti"></canvas>
+<div class="floodlights" id="floodlights">
+  <div class="beam l"></div>
+  <div class="beam r"></div>
+</div>
+
+<audio id="anthem" loop preload="none">
+  <source src="data:audio/mpeg;base64,song.mp3" type="audio/mpeg">
+</audio>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="kickoff-tag">MATCHDAY · OCTOBER 3RD</div>
+  <div class="num10">10</div>
+  <h1>Happy Birthday, <em>Ameen</em></h1>
+  <p class="sub">To the real <b>GOAT</b> — my earth, my heart, my life, my everything.
+    Every year, every day, I fall for you a little harder. This one's all for you.</p>
+  <button class="music-btn" id="musicBtn" type="button">
+    <span class="dot"></span><span id="musicLabel">Kick off our anthem</span>
+  </button>
+  <div class="scroll-cue">SCROLL ↓</div>
+</section>
+
+<div class="wrap">
+
+  <!-- SCOREBOARD -->
+  <section id="board">
+    <div class="eyebrow">THE SCORE SO FAR</div>
+    <h2 class="section-title">Us, <span>by the numbers</span></h2>
+    <div class="board">
+      <div>
+        <div class="stat-label">DAYS TOGETHER</div>
+        <div class="stat-num" id="daysTogether">0<small>and counting</small></div>
+      </div>
+      <div>
+        <div class="stat-label">TIMES YOU'VE MADE ME MELT</div>
+        <div class="stat-num">∞<small>every single time</small></div>
+      </div>
+      <div class="divider"></div>
+      <div style="grid-column:1/-1;">
+        <div class="stat-label" style="margin-bottom:16px;">KICK-OFF TO YOUR BIRTHDAY</div>
+        <div class="today-banner" id="todayBanner">IT'S YOUR DAY, CHAMPION 🏆</div>
+        <div class="clock-row" id="countdownRow">
+          <div class="clock-cell"><div class="n" id="cd-d">00</div><div class="l">DAYS</div></div>
+          <div class="clock-cell"><div class="n" id="cd-h">00</div><div class="l">HRS</div></div>
+          <div class="clock-cell"><div class="n" id="cd-m">00</div><div class="l">MIN</div></div>
+          <div class="clock-cell"><div class="n" id="cd-s">00</div><div class="l">SEC</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LINEUP -->
+  <section id="lineup">
+    <div class="eyebrow">TODAY'S STARTING XI</div>
+    <h2 class="section-title">Every reason I <span>adore you</span></h2>
+    <div class="lineup">
+      <div class="player"><div class="jersey">1</div><div><div class="role">THOSE EYES</div><div class="desc">The first thing I fall into, <b>every single time</b> — I could stare for hours and still not be done.</div></div></div>
+      <div class="player"><div class="jersey">2</div><div><div class="role">THAT NOSE</div><div class="desc">Ridiculously cute and somehow it's <b>one of my favorite things</b> about your whole face.</div></div></div>
+      <div class="player"><div class="jersey">3</div><div><div class="role">THOSE CHEEKS</div><div class="desc">Squishable, adorable, and mine to admire whenever I want.</div></div></div>
+      <div class="player"><div class="jersey">4</div><div><div class="role">YOUR HAIR</div><div class="desc">I don't even know why — I just <b>love running my eyes over it</b> in every photo.</div></div></div>
+      <div class="player"><div class="jersey">5</div><div><div class="role">THE BEARD</div><div class="desc">It somehow makes you look even more handsome. Unfair advantage, honestly.</div></div></div>
+      <div class="player"><div class="jersey">6</div><div><div class="role">YOUR NECK</div><div class="desc">Yes, even this. Every single part of you is something I've memorized.</div></div></div>
+      <div class="player"><div class="jersey">7</div><div><div class="role">THOSE FINGERS</div><div class="desc">I think about holding your hand more than I'll ever admit out loud.</div></div></div>
+      <div class="player captain"><div class="jersey">10</div><div><div class="role">YOUR HEART — CAPTAIN</div><div class="desc">You treat me like a <b>princess</b>, every single day. That's the reason behind every point on this list.</div></div></div>
+    </div>
+  </section>
+
+  <!-- LETTER -->
+  <section id="letter">
+    <div class="eyebrow">A NOTE FROM THE STANDS</div>
+    <h2 class="section-title">Open when <span>you're ready</span></h2>
+    <div class="letter-zone">
+      <div class="envelope" id="envelope">
+        <div class="body"></div>
+        <div class="seal">💌</div>
+        <div class="flap"></div>
+      </div>
+      <div class="envelope-hint" id="envelopeHint">tap the envelope to open it</div>
+      <div class="letter-paper" id="letterPaper">
+        <p>My Ameen,</p>
+        <p>I don't have one favorite trip, one favorite photo, one favorite moment I can point to — because being with you has made almost every day feel like one. But if I had to pick just <i>one</i> thing I can never forget, it's your face on our very first video call. That reaction, that smile — I've replayed it in my head more times than I can count.</p>
+        <p>Every long year, I want to love you. Every single day, from the first one, to our very last one, to our old age together — I love you. And somehow, the more days that pass, the harder I fall.</p>
+        <p>You found me on some random app, and turned into my earth, my heart, my life, my everything. Happy Birthday, my GOAT. This is just a tiny piece of how much I love you.</p>
+        <p class="sign">— your girl, forever falling for you</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- XO GAME -->
+  <section id="game">
+    <div class="eyebrow">A QUICK MATCH</div>
+    <h2 class="section-title">You <span>vs.</span> Me</h2>
+    <div class="xo-wrap">
+      <div class="xo-legend"><span>⚽ = You</span><span>❤️ = Me</span></div>
+      <div class="xo-board" id="xoBoard"></div>
+      <div class="xo-msg" id="xoMsg">Your turn, champion.</div>
+      <button class="xo-reset" id="xoReset" type="button">Play again</button>
+    </div>
+  </section>
+
+  <!-- STORY -->
+  <section id="story">
+    <div class="eyebrow">MATCH REPORT</div>
+    <h2 class="section-title">Our story <span>so far</span></h2>
+    <div class="story-card">
+      <p>One dating app, one lucky swipe, and somehow — <b>you</b>. A whole year of loving each other, and it still feels like the first day every time I see your name pop up.</p>
+      <p>I still think about your face on our first video call more than anything else. That one reaction lives rent-free in my head, and honestly? I hope it always will.</p>
+      <p>On <b>October 8th, 2025</b>, we told each other it was real. Since then, every single day has just been more reasons to fall for you harder.</p>
+    </div>
+  </section>
+
+  <!-- CAKE -->
+  <section id="cake">
+    <div class="eyebrow">FULL TIME WHISTLE</div>
+    <h2 class="section-title">Make a <span>wish</span></h2>
+    <div class="cake-zone">
+      <svg class="cake-svg" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
+        <rect x="20" y="150" width="160" height="55" rx="10" fill="#A9D4F5"/>
+        <rect x="20" y="150" width="160" height="14" fill="#6CACE4"/>
+        <rect x="35" y="110" width="130" height="45" rx="8" fill="#F7FAFF"/>
+        <rect x="35" y="110" width="130" height="12" fill="#E3BD5C"/>
+        <circle cx="60" cy="105" r="5" fill="#E3BD5C"/>
+        <circle cx="100" cy="102" r="5" fill="#FF8FA3"/>
+        <circle cx="140" cy="105" r="5" fill="#E3BD5C"/>
+        <rect x="95" y="70" width="10" height="34" rx="3" fill="#F1D9A0"/>
+        <g id="flameGroup">
+          <path class="flame" d="M100 30 C 92 45, 92 58, 100 68 C 108 58, 108 45, 100 30 Z" fill="#E3BD5C"/>
+          <path class="flame" d="M100 42 C 96 50, 96 58, 100 63 C 104 58, 104 50, 100 42 Z" fill="#FF8FA3" opacity="0.85"/>
+        </g>
+      </svg>
+      <button class="blow-btn" id="blowBtn" type="button"><span class="fill" id="blowFill"></span><span id="blowLabel">Hold to blow the candle</span></button>
+      <div class="wish-text" id="wishText">Wish made ✨ — here's to another year of me falling for you, Ameen. Happy Birthday, my GOAT.</div>
+    </div>
+  </section>
+
+  <!-- KEEPY UPPIES -->
+  <section id="juggle">
+    <div class="eyebrow">EXTRA TIME</div>
+    <h2 class="section-title">Keepy-<span>uppies</span></h2>
+    <div class="juggle-zone">
+      <div class="juggle-msg" id="juggleMsg">Tap the ball. Keep it up as long as you can.</div>
+      <div class="ball-stage" id="ballStage">
+        <div class="ball" id="ball">⚽</div>
+      </div>
+      <div class="juggle-score">STREAK: <span id="juggleCount">0</span></div>
+      <button class="xo-reset" id="juggleReset" type="button">Drop the ball / reset</button>
+    </div>
+  </section>
+
+  <!-- FINALE -->
+  <section class="finale" id="finale">
+    <div class="finale-hearts" id="finaleHearts"></div>
+    <h2>Full time. <span>You win.</span></h2>
+    <p>Every reason on this page is real. You're my earth, my heart, my life, my everything — and the longer we're together, the harder I keep falling. Not just today. Every day, till we're old, this is still how I'll feel about you.</p>
+    <div class="final-sign">I love you, Ameen. Always. — your girl</div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="sign-off">I love you, Ameen. My heart, my GOAT, my everything.</div>
+  <div>Happy Birthday — October 3rd</div>
+  <div class="ball">⚽ 💙 🤍</div>
+</footer>
+
+<script>
+(function(){
+  // floodlights on load
+  window.addEventListener('load', function(){
+    document.getElementById('floodlights').classList.add('on');
+  });
+
+  // ---- audio ----
+  var audio = document.getElementById('anthem');
+  var musicBtn = document.getElementById('musicBtn');
+  var musicLabel = document.getElementById('musicLabel');
+  var playing = false;
+  musicBtn.addEventListener('click', function(){
+    if(!playing){
+      audio.play().catch(function(){});
+      musicLabel.textContent = 'Playing our anthem ♪';
+      playing = true;
+    } else {
+      audio.pause();
+      musicLabel.textContent = 'Kick off our anthem';
+      playing = false;
+    }
+  });
+
+  // ---- days together counter ----
+  var start = new Date(2025, 9, 8); // Oct 8 2025
+  function updateDays(){
+    var now = new Date();
+    var diff = Math.floor((now - start) / 86400000);
+    document.getElementById('daysTogether').firstChild.textContent = Math.max(diff,0);
+  }
+  updateDays();
+  setInterval(updateDays, 60000);
+
+  // ---- birthday countdown ----
+  function nextBirthday(){
+    var now = new Date();
+    var y = now.getFullYear();
+    var bday = new Date(y, 9, 3, 0, 0, 0); // Oct 3
+    if(now.getMonth() === 9 && now.getDate() === 3){ return null; } // today!
+    if(now > bday){ bday = new Date(y+1, 9, 3); }
+    return bday;
+  }
+  function tickCountdown(){
+    var target = nextBirthday();
+    if(target === null){
+      document.getElementById('todayBanner').style.display = 'block';
+      document.getElementById('countdownRow').style.display = 'none';
+      return;
+    }
+    var now = new Date();
+    var diff = target - now;
+    var d = Math.floor(diff / 86400000);
+    var h = Math.floor((diff % 86400000) / 3600000);
+    var m = Math.floor((diff % 3600000) / 60000);
+    var s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('cd-d').textContent = String(d).padStart(2,'0');
+    document.getElementById('cd-h').textContent = String(h).padStart(2,'0');
+    document.getElementById('cd-m').textContent = String(m).padStart(2,'0');
+    document.getElementById('cd-s').textContent = String(s).padStart(2,'0');
+  }
+  tickCountdown();
+  setInterval(tickCountdown, 1000);
+
+  // ---- envelope / letter ----
+  var envelope = document.getElementById('envelope');
+  var letterPaper = document.getElementById('letterPaper');
+  var envelopeHint = document.getElementById('envelopeHint');
+  envelope.addEventListener('click', function(){
+    var isOpen = envelope.classList.toggle('open');
+    if(isOpen){
+      setTimeout(function(){ letterPaper.classList.add('show'); }, 300);
+      envelopeHint.textContent = 'tap again to close';
+    } else {
+      letterPaper.classList.remove('show');
+      envelopeHint.textContent = 'tap the envelope to open it';
+    }
+  });
+
+  // ---- XO game ----
+  var boardEl = document.getElementById('xoBoard');
+  var msgEl = document.getElementById('xoMsg');
+  var resetBtn = document.getElementById('xoReset');
+  var cells, board, turn, over;
+
+  function initGame(){
+    board = Array(9).fill(null);
+    turn = '⚽';
+    over = false;
+    boardEl.innerHTML = '';
+    cells = [];
+    for(var i=0;i<9;i++){
+      var c = document.createElement('div');
+      c.className = 'xo-cell';
+      c.dataset.i = i;
+      c.addEventListener('click', onCellClick);
+      boardEl.appendChild(c);
+      cells.push(c);
+    }
+    msgEl.textContent = "Your turn, champion.";
+  }
+
+  var lines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+  function checkWin(b, p){
+    return lines.some(function(l){ return l.every(function(i){ return b[i] === p; }); });
+  }
+
+  function onCellClick(e){
+    if(over) return;
+    var i = parseInt(e.currentTarget.dataset.i, 10);
+    if(board[i]) return;
+    board[i] = turn;
+    cells[i].textContent = turn;
+    if(checkWin(board, turn)){
+      over = true;
+      msgEl.textContent = (turn === '⚽') ? "You win — but I'm still keeping you 💙" : "I win! ...which just means I get more hugs from you 🤍";
+      return;
+    }
+    if(board.every(Boolean)){
+      over = true;
+      msgEl.textContent = "It's a draw — because with us, love always wins anyway 🤍💙";
+      return;
+    }
+    turn = (turn === '⚽') ? '❤️' : '⚽';
+    if(turn === '❤️'){
+      msgEl.textContent = "My turn...";
+      setTimeout(botMove, 500);
+    } else {
+      msgEl.textContent = "Your turn, champion.";
+    }
+  }
+
+  function botMove(){
+    if(over) return;
+    var empty = board.map(function(v,i){return v?null:i;}).filter(function(v){return v!==null;});
+    // try to win
+    var move = findBestMove('❤️') ?? findBestMove('⚽') ?? empty[Math.floor(Math.random()*empty.length)];
+    board[move] = '❤️';
+    cells[move].textContent = '❤️';
+    if(checkWin(board, '❤️')){
+      over = true;
+      msgEl.textContent = "I win! ...which just means I get more hugs from you 🤍";
+      return;
+    }
+    if(board.every(Boolean)){
+      over = true;
+      msgEl.textContent = "It's a draw — because with us, love always wins anyway 🤍💙";
+      return;
+    }
+    turn = '⚽';
+    msgEl.textContent = "Your turn, champion.";
+  }
+  function findBestMove(player){
+    for(var i=0;i<9;i++){
+      if(!board[i]){
+        board[i] = player;
+        var win = checkWin(board, player);
+        board[i] = null;
+        if(win) return i;
+      }
+    }
+    return null;
+  }
+  resetBtn.addEventListener('click', initGame);
+  initGame();
+
+  // ---- blow candle ----
+  var blowBtn = document.getElementById('blowBtn');
+  var blowFill = document.getElementById('blowFill');
+  var blowLabel = document.getElementById('blowLabel');
+  var flameGroup = document.getElementById('flameGroup');
+  var wishText = document.getElementById('wishText');
+  var holdTimer = null, progress = 0, blownOut = false;
+
+  function startHold(){
+    if(blownOut) return;
+    holdTimer = setInterval(function(){
+      progress += 4;
+      blowFill.style.width = Math.min(progress,100) + '%';
+      if(progress >= 100){
+        clearInterval(holdTimer);
+        blownOut = true;
+        flameGroup.classList.add('out');
+        blowLabel.textContent = 'Candle out 🎉';
+        wishText.classList.add('show');
+        launchConfetti();
+      }
+    }, 60);
+  }
+  function stopHold(){
+    if(blownOut) return;
+    clearInterval(holdTimer);
+    progress = Math.max(progress - 20, 0);
+    blowFill.style.width = progress + '%';
+  }
+  blowBtn.addEventListener('mousedown', startHold);
+  blowBtn.addEventListener('touchstart', function(e){ e.preventDefault(); startHold(); }, {passive:false});
+  ['mouseup','mouseleave'].forEach(function(ev){ blowBtn.addEventListener(ev, stopHold); });
+  blowBtn.addEventListener('touchend', stopHold);
+
+  // ---- confetti ----
+  var canvas = document.getElementById('confetti');
+  var ctx = canvas.getContext('2d');
+  function resizeCanvas(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+  var colors = ['#6CACE4','#F7FAFF','#E3BD5C','#A9D4F5'];
+  function launchConfetti(){
+    var particles = [];
+    for(var i=0;i<160;i++){
+      particles.push({
+        x: Math.random()*canvas.width,
+        y: -20 - Math.random()*canvas.height*0.3,
+        r: 4 + Math.random()*5,
+        c: colors[Math.floor(Math.random()*colors.length)],
+        vy: 2 + Math.random()*3,
+        vx: -1.5 + Math.random()*3,
+        rot: Math.random()*360,
+        vr: -6 + Math.random()*12
+      });
+    }
+    var frames = 0;
+    var maxFrames = 260;
+    function frame(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      particles.forEach(function(p){
+        p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+        ctx.save();
+        ctx.translate(p.x,p.y);
+        ctx.rotate(p.rot*Math.PI/180);
+        ctx.fillStyle = p.c;
+        ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r*0.6);
+        ctx.restore();
+      });
+      frames++;
+      if(frames < maxFrames){ requestAnimationFrame(frame); }
+      else { ctx.clearRect(0,0,canvas.width,canvas.height); }
+    }
+    frame();
+  }
+  // ---- keepy-uppies ----
+  var ball = document.getElementById('ball');
+  var juggleCountEl = document.getElementById('juggleCount');
+  var juggleMsg = document.getElementById('juggleMsg');
+  var juggleReset = document.getElementById('juggleReset');
+  var streak = 0;
+  var milestones = [
+    [5, "Nice touch! Messi would be proud. ⚽"],
+    [10, "Okay GOAT, showing off now? 😏"],
+    [20, "You + me = unstoppable strike partnership 💙🤍"],
+    [35, "This streak is longer than my patience waiting for your replies 😄"],
+    [50, "Half a century! You're officially undroppable, champion."]
+  ];
+  ball.addEventListener('click', function(){
+    streak++;
+    juggleCountEl.textContent = streak;
+    ball.classList.remove('hit');
+    void ball.offsetWidth;
+    ball.classList.add('hit');
+    setTimeout(function(){ ball.classList.remove('hit'); }, 280);
+    var msg = "Keep going...";
+    for(var i=0;i<milestones.length;i++){ if(streak === milestones[i][0]){ msg = milestones[i][1]; } }
+    if(msg === "Keep going...") { /* keep last message a bit for non-milestones */ }
+    else { juggleMsg.textContent = msg; }
+  });
+  juggleReset.addEventListener('click', function(){
+    streak = 0;
+    juggleCountEl.textContent = 0;
+    juggleMsg.textContent = "Tap the ball. Keep it up as long as you can.";
+  });
+
+  // ---- finale floating hearts ----
+  var finale = document.getElementById('finale');
+  var heartsHost = document.getElementById('finaleHearts');
+  var heartChars = ['💙','🤍','⚽','💫'];
+  var heartsRunning = false, heartsTimer = null;
+  function spawnHeart(){
+    var el = document.createElement('span');
+    el.textContent = heartChars[Math.floor(Math.random()*heartChars.length)];
+    el.style.left = (Math.random()*90 + 5) + '%';
+    el.style.setProperty('--dx', (Math.random()*60 - 30) + 'px');
+    el.style.animationDuration = (5 + Math.random()*4) + 's';
+    heartsHost.appendChild(el);
+    setTimeout(function(){ el.remove(); }, 9000);
+  }
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting && !heartsRunning){
+        heartsRunning = true;
+        heartsTimer = setInterval(spawnHeart, 500);
+      } else if(!e.isIntersecting && heartsRunning){
+        heartsRunning = false;
+        clearInterval(heartsTimer);
+      }
+    });
+  }, {threshold:0.3});
+  obs.observe(finale);
+})();
+</script>
+</body>
+</html>
